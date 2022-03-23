@@ -11,8 +11,39 @@ from matplotlib.animation import FuncAnimation
 
 run = False
 root = Tk.Tk()
-root.title("PID Controller")
-root.geometry("750x750")
+root.title("PID controller parameters")
+root.geometry("750x750+800+100")
+
+fig = plt.Figure()
+
+axes = [
+    fig.add_subplot()]
+
+realValues = []
+timeStamps = []
+requiredValues = []
+def animate(i):
+    for ax in axes:
+        ax.cla()
+    requiredValue = input.get()
+    if(requiredValue == ''):
+        requiredValue = 0
+    print(requiredValue)
+    print(realValue)
+    realValues.append(realValue)
+    timeStamps.append(len(realValues)*iterationTime)
+    requiredValues.append(int(requiredValue))
+    axes[0].plot(timeStamps, requiredValues)
+    axes[0].plot(timeStamps, realValues)
+    return 
+
+
+root2 = Tk.Tk()
+root2.title("PID controller visualisation")
+root2.geometry("750x750+0+100")
+canvas = FigureCanvasTkAgg(fig, master=root2)
+canvas.get_tk_widget().grid(column=0,row=1)
+ani = animation.FuncAnimation(fig, animate, interval=300)
 
 label1=StringVar()
 label1.set("Required value")
@@ -43,11 +74,11 @@ d = Entry(root)
 d.pack()
 
 
-realValue = 0
+realValue = 0.0
 iterationTime = 0.2
-errorPrior = 0
-integral_prior = 0
-entryValue = 0
+errorPrior = 0.0
+integral_prior = 0.0
+entryValue = 0.0
 def onClick():
     global run
     print(run)
@@ -55,68 +86,38 @@ def onClick():
         run = True
     else:
         run = False
-    startPid()
+    controllerPid()
 
-def startPid():
+
+def controllerPid():
     global run
-    entryValue = input.get()
-    gains = {
-        "Kp" : p.get(),
-        "Ki" : i.get(),
-        "Kd" : d.get()
-    }
-    for gain in gains:
-        if(gains[gain] == ''):
-            gains[gain] = 0
-    if entryValue == '':
-        entryValue = 0
-    if run == True:
-        controllerPid(int(entryValue), int(gains["Kp"]), int(gains["Ki"]), int(gains["Kd"]))
-
-def controllerPid(entryValue, Kp, Ki, Kd):
-    print(Kp)
     global realValue
     global iterationTime
     global errorPrior
     global integral_prior
+    entryValue = input.get()
+    gains = {
+        "Kp" : p.get().replace(',', '.'),
+        "Ki" : i.get().replace(',', '.'),
+        "Kd" : d.get().replace(',', '.')
+    }
+    print(gains)
+    for gain in gains:
+        if(gains[gain] == ''):
+            gains[gain] = 0.0
+    if entryValue == '':
+        entryValue = 0.0
     if(run):
-        err = entryValue - realValue
+        err = float(entryValue) - realValue
         integral = integral_prior + err * iterationTime
         derivative = (err - errorPrior ) / iterationTime
-        output = Kp*err + Ki*integral + Kd*derivative 
+        output = float(gains['Kp'])*err + float(gains['Ki'])*integral + float(gains['Kd'])*derivative 
         errorPrior = err
         integral_prior = integral
-        realValue += output*0.1
-    root.after(int(1000*iterationTime), startPid)
+        realValue += output
+    root.after(int(1000*iterationTime), controllerPid)
     
 startButton = Button(root, text = "Start\Stop", command = onClick)
 startButton.pack()
-fig = plt.Figure()
 
-axes = [
-    fig.add_subplot()]
-
-realValues = []
-timeStamps = []
-requiredValues = []
-def animate(i):
-    for ax in axes:
-        ax.cla()
-    requiredValue = input.get()
-    if(requiredValue == ''):
-        requiredValue = 0
-    print(requiredValue)
-    print(realValue)
-    realValues.append(realValue)
-    timeStamps.append(len(realValues)*iterationTime)
-    requiredValues.append(int(requiredValue))
-    axes[0].plot(timeStamps, requiredValues)
-    axes[0].plot(timeStamps, realValues)
-    return 
-
-root2 = Tk.Tk()
-label = Tk.Label(root2,text="PID Controller Visualisation").grid(column=0, row=0)   
-canvas = FigureCanvasTkAgg(fig, master=root2)
-canvas.get_tk_widget().grid(column=0,row=1)
-ani = animation.FuncAnimation(fig, animate, interval=200, blit=False)
 Tk.mainloop()
