@@ -74,7 +74,7 @@ d.pack()
 realValue = 0.0
 iterationTime = 0.2
 errorPrior = 0.0
-integral_prior = 0.0
+integralPrior = 0.0
 entryValue = 0.0
 def onClick():
     global run
@@ -90,7 +90,7 @@ def controllerPid():
     global realValue
     global iterationTime
     global errorPrior
-    global integral_prior
+    global integralPrior
     entryValue = input.get()
     gains = {
         "Kp" : p.get().replace(',', '.'),
@@ -104,11 +104,11 @@ def controllerPid():
         entryValue = 0.0
     if(run):
         err = float(entryValue) - realValue
-        integral = integral_prior + err * iterationTime
+        integral = integralPrior + err * iterationTime
         derivative = (err - errorPrior ) / iterationTime
         output = float(gains['Kp'])*err + float(gains['Ki'])*integral + float(gains['Kd'])*derivative 
         errorPrior = err
-        integral_prior = integral
+        integralPrior = integral
         realValue += output
     root.after(int(1000*iterationTime), controllerPid)
     
