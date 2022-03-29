@@ -1,4 +1,3 @@
-import re
 from tkinter import *
 import tkinter as Tk
 from matplotlib.figure import Figure
@@ -28,8 +27,6 @@ def animate(i):
     requiredValue = input.get()
     if(requiredValue == ''):
         requiredValue = 0
-    print(requiredValue)
-    print(realValue)
     realValues.append(realValue)
     timeStamps.append(len(realValues)*iterationTime)
     requiredValues.append(int(requiredValue))
@@ -81,7 +78,6 @@ integral_prior = 0.0
 entryValue = 0.0
 def onClick():
     global run
-    print(run)
     if(run == False):
         run = True
     else:
@@ -101,7 +97,6 @@ def controllerPid():
         "Ki" : i.get().replace(',', '.'),
         "Kd" : d.get().replace(',', '.')
     }
-    print(gains)
     for gain in gains:
         if(gains[gain] == ''):
             gains[gain] = 0.0
