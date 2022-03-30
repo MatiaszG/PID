@@ -1,18 +1,13 @@
 from tkinter import *
 import tkinter as Tk
-from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
-from matplotlib.figure import Figure
-from matplotlib.animation import FuncAnimation
 
 run = False
 root = Tk.Tk()
 root.title("PID controller parameters")
 root.geometry("750x750+800+100")
-
 fig = plt.Figure()
 
 axes = [
