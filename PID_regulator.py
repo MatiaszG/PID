@@ -82,22 +82,22 @@ def onClick():
 
 def controllerPid():
     global run
-    global realValue
-    global iterationTime
-    global errorPrior
-    global integralPrior
-    entryValue = input.get()
-    gains = {
-        "Kp" : p.get().replace(',', '.'),
-        "Ki" : i.get().replace(',', '.'),
-        "Kd" : d.get().replace(',', '.')
-    }
-    for gain in gains:
-        if(gains[gain] == ''):
-            gains[gain] = 0.0
-    if entryValue == '':
-        entryValue = 0.0
     if(run):
+        global realValue
+        global iterationTime
+        global errorPrior
+        global integralPrior
+        entryValue = input.get()
+        gains = {
+            "Kp" : p.get().replace(',', '.'),
+            "Ki" : i.get().replace(',', '.'),
+            "Kd" : d.get().replace(',', '.')
+        }
+        for gain in gains:
+            if(gains[gain] == ''):
+                gains[gain] = 0.0
+        if entryValue == '':
+            entryValue = 0.0
         err = float(entryValue) - realValue
         integral = integralPrior + err * iterationTime
         derivative = (err - errorPrior ) / iterationTime
@@ -105,7 +105,9 @@ def controllerPid():
         errorPrior = err
         integralPrior = integral
         realValue += output
-    root.after(int(1000*iterationTime), controllerPid)
+        root.after(int(1000*iterationTime), controllerPid)
+    else:
+        return
     
 startButton = Button(root, text = "Start\Stop", command = onClick)
 startButton.pack()
