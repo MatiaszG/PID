@@ -5,7 +5,7 @@ import matplotlib.animation as animation
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 root = Tk.Tk()
-root.title("PID controller parameters")
+root.title("PID regulator parameters")
 root.geometry("750x750+800+100")
 fig = plt.Figure()
 
@@ -32,7 +32,7 @@ def animate(i):
 
 
 root2 = Tk.Tk()
-root2.title("PID controller visualisation")
+root2.title("PID regulator visualization")
 root2.geometry("750x750+0+100")
 canvas = FigureCanvasTkAgg(fig, master=root2)
 canvas.get_tk_widget().grid(column=0, row=1)
