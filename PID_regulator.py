@@ -9,8 +9,7 @@ root.title("PID regulator parameters")
 root.geometry("750x750+800+100")
 fig = plt.Figure()
 
-axes = [
-    fig.add_subplot()]
+ax = fig.add_subplot()
 
 realValues = []
 timeStamps = []
@@ -18,16 +17,18 @@ requiredValues = []
 
 
 def animate(i):
-    for ax in axes:
-        ax.cla()
+    ax.cla()
     requiredValue = input.get()
     if(requiredValue == ''):
         requiredValue = 0
     realValues.append(realValue)
     timeStamps.append(len(realValues)*iterationTime)
     requiredValues.append(int(requiredValue))
-    axes[0].plot(timeStamps, requiredValues)
-    axes[0].plot(timeStamps, realValues)
+    ax.plot(timeStamps, requiredValues)
+    ax.plot(timeStamps, realValues)
+    ax.set_xlabel('Time [s]')
+    ax.set_ylabel('Value [-]')
+    ax.legend(['Wartość zadana', 'Wartość mierzona'], loc = 2)
     return
 
 
@@ -68,7 +69,7 @@ d.pack()
 
 run = False
 realValue = 0.0
-iterationTime = 0.2
+iterationTime = 0.3
 errorPrior = 0.0
 integralPrior = 0.0
 entryValue = 0.0
