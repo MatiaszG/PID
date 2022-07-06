@@ -28,7 +28,7 @@ def animate(i):
     ax.plot(timeStamps, realValues)
     ax.set_xlabel('Time [s]')
     ax.set_ylabel('Value [-]')
-    ax.legend(['Wartość zadana', 'Wartość mierzona'], loc = 2)
+    ax.legend(['Setpoint', 'Measured value'], loc = 2)
     return
 
 
