@@ -40,7 +40,7 @@ canvas.get_tk_widget().grid(column=0, row=1)
 ani = animation.FuncAnimation(fig, animate, interval=300)
 
 label1 = StringVar()
-label1.set("Required value")
+label1.set("Setpoint")
 labelDir = Label(root, textvariable=label1, height=2)
 labelDir.pack()
 input = Entry(root)
