@@ -7,3 +7,4 @@ Okno wyświetlone po lewej stronie ekranu przedstawia animowany wykres obrazują
 Okno wyświetlone z prawej strony umożliwia dobranie parametrów regulatora oraz wartości zadanej.
 Przycisk "Start\Stop" włącza lub wyłącza proces regulacji.
 Warto pamiętać, że przy niewłaściwych nastawach regulatora, układ może utracić stabilność co poskutkuje nie dopasowaniem się wartości rzeczywistej do zadanej.
+Zaleca się korzystanie z nastaw parametrów P, I oraz D w zakresie od 0 do 0.5 oraz wartości zadanej (Setpoint) w zakresie od 0 do 100.
