@@ -35,6 +35,7 @@ def animate(i):
 root2 = Tk.Tk()
 root2.title("PID regulator visualization")
 root2.geometry("750x750+0+100")
+root2.configure(background='white')
 canvas = FigureCanvasTkAgg(fig, master=root2)
 canvas.get_tk_widget().grid(column=0, row=1)
 ani = animation.FuncAnimation(fig, animate, interval=300)
